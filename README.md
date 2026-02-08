@@ -90,6 +90,7 @@ A Laravel-based gallery application that synchronizes data from JSONPlaceholder 
 
 3. **Database:**
    ```bash
+   touch database/database.sqlite && php artisan migrate --force
    php artisan migrate
    php artisan app:fetch-photos
    ```
