@@ -9,36 +9,22 @@ use Illuminate\Support\Facades\Log;
 class PhotoService
 {
     private const API_URL = 'https://jsonplaceholder.typicode.com/photos';
-    private const REQUEST_TIMEOUT = 30; // seconds
+    private const REQUEST_TIMEOUT = 30;
 
-    /**
-     * @var PhotoRepositoryInterface
-     */
     protected $photoRepository;
 
-    /**
-     * PhotoService constructor.
-     * 
-     * @param PhotoRepositoryInterface $photoRepository
-     */
     public function __construct(PhotoRepositoryInterface $photoRepository)
     {
         $this->photoRepository = $photoRepository;
     }
 
-    /**
-     * Fetch photos from external API and store in database
-     *
-     * @return array
-     */
     public function fetchAndStorePhotos(): array
     {
         try {
             Log::info('Starting to fetch photos from API');
 
-            // Fetch data from API with timeout handling
             $response = Http::timeout(self::REQUEST_TIMEOUT)
-                ->retry(3, 100) // Retry 3 times with 100ms delay
+                ->retry(3, 100)
                 ->get(self::API_URL);
 
             if (!$response->successful()) {
@@ -62,13 +48,8 @@ class PhotoService
 
             Log::info('Fetched ' . count($photos) . ' photos from API');
 
-            // Prepare data for bulk insert
             $preparedPhotos = $this->preparePhotosForStorage($photos);
 
-            // Clear existing data (optional - depends on requirements)
-            // $this->photoRepository->truncate();
-
-            // Store in database using chunked insertion
             $result = $this->photoRepository->bulkInsert($preparedPhotos);
 
             if ($result) {
@@ -103,12 +84,6 @@ class PhotoService
         }
     }
 
-    /**
-     * Prepare photos data for storage
-     *
-     * @param array $photos
-     * @return array
-     */
     private function preparePhotosForStorage(array $photos): array
     {
         $now = now();
@@ -126,12 +101,6 @@ class PhotoService
         }, $photos);
     }
 
-    /**
-     * Get all photos with pagination
-     *
-     * @param int $perPage
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
     public function getAllPhotos(int $perPage = 15)
     {
         return $this->photoRepository->getAllPaginated($perPage);

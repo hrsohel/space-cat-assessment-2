@@ -7,39 +7,16 @@ use Illuminate\Console\Command;
 
 class FetchPhotos extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'app:fetch-photos';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Fetch photos from JSONPlaceholder API and store them in the database';
-
-    /**
-     * @var PhotoService
-     */
     protected $photoService;
 
-    /**
-     * Create a new command instance.
-     *
-     * @param PhotoService $photoService
-     */
     public function __construct(PhotoService $photoService)
     {
         parent::__construct();
         $this->photoService = $photoService;
     }
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $this->info('Starting to fetch photos from API...');

@@ -76,6 +76,6 @@ echo.
 echo To start the server, run:
 echo "%PHP_PATH%" artisan serve
 echo.
-echo Then visit: http://localhost:8000/photos
+echo Then visit: http://localhost:8000/
 echo.
 pause

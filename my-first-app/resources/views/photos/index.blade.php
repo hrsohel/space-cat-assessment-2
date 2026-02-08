@@ -135,104 +135,141 @@
         }
 
         .pagination-wrapper {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 15px 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .pagination {
+            margin-top: 50px;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
+            width: 100%;
         }
 
-        .pagination a,
-        .pagination span {
-            display: inline-block;
-            padding: 4px 8px;
-            background: white;
-            border: 2px solid #667eea;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            min-width: 32px;
-            text-align: center;
-        }
-
-        .pagination a:hover {
-            background: #667eea;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .pagination .active span {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: transparent;
-        }
-
-        .pagination .disabled span {
-            background: #f5f5f5;
-            color: #ccc;
-            border-color: #e0e0e0;
-            cursor: not-allowed;
-        }
-
-        /* Style SVG arrows in pagination - More robust selectors for Laravel defaults */
-        .pagination-wrapper svg,
-        .pagination svg,
-        nav[role="navigation"] svg {
-            width: 20px !important;
-            height: 20px !important;
-            vertical-align: middle;
-            display: inline-block;
-        }
-
-        /* Hide the redundant "Showing X to Y" text that Laravel sometimes adds */
-        .pagination-wrapper nav > div:first-child {
-            display: none;
-        }
-
-        /* Ensure the navigation container is centered and clean */
         .pagination-wrapper nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             display: flex;
             justify-content: center;
             align-items: center;
+            max-width: fit-content;
         }
 
-        /* Make rel links (Previous/Next) more prominent */
-        .pagination a[rel="prev"],
-        .pagination a[rel="next"],
-        nav span[aria-hidden="true"],
-        nav a[rel="prev"],
-        nav a[rel="next"] {
+        .pagination-wrapper nav > div:first-child,
+        .pagination-wrapper nav p,
+        .pagination-wrapper .hidden.sm\:flex-1 {
+            display: none !important;
+        }
+
+        .pagination-wrapper nav > div:last-child,
+        .pagination-wrapper .flex.justify-between.flex-1,
+        .pagination-wrapper .sm\:flex.sm\:items-center.sm\:justify-between {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px;
+            width: auto;
+        }
+
+        .pagination-wrapper span[aria-label="Pagination Navigation"],
+        .pagination-wrapper div[role="navigation"] {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             gap: 6px;
+        }
+
+        .pagination-wrapper a, 
+        .pagination-wrapper span[aria-current="page"] span,
+        .pagination-wrapper span[aria-disabled="true"] span {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-width: 42px;
+            height: 42px;
+            padding: 0;
+            border-radius: 50%;
+            font-size: 0.9rem;
             font-weight: 600;
-            display: flex;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .pagination-wrapper a[rel="prev"],
+        .pagination-wrapper a[rel="next"],
+        .pagination-wrapper span[aria-disabled="true"]:first-child span,
+        .pagination-wrapper span[aria-disabled="true"]:last-child span {
+            border-radius: 25px;
+            padding: 0 15px;
+            min-width: 50px;
+        }
+
+        .pagination-wrapper a {
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pagination-wrapper a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .pagination-wrapper span[aria-current="page"] span {
+            background: white;
+            color: #764ba2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .pagination-wrapper span[aria-disabled="true"] span {
+            color: rgba(255, 255, 255, 0.3);
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: not-allowed;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Hide page numbers on small screens, show only prev/next */
-        @media (max-width: 640px) {
-            .pagination a,
-            .pagination span {
-                padding: 5px 10px;
-                font-size: 0.85rem;
-                min-width: 32px;
+        .pagination-wrapper svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 3;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .pagination-wrapper nav {
+                padding: 6px;
+                border-radius: 30px;
+            }
+            
+            .pagination-wrapper a:not([rel="prev"]):not([rel="next"]),
+            .pagination-wrapper span[aria-current="page"]:not(:last-child):not(:first-child) {
+                display: none !important;
+            }
+            
+            .pagination-wrapper span[aria-current="page"] span,
+            .pagination-wrapper a[rel="prev"],
+            .pagination-wrapper a[rel="next"] {
+                display: inline-flex !important;
             }
 
-            .pagination svg {
-                width: 14px;
-                height: 14px;
+            .pagination-wrapper a, 
+            .pagination-wrapper span {
+                min-width: 38px !important;
+                height: 38px !important;
             }
         }
+
+
 
         .empty-state {
             text-align: center;
@@ -276,9 +313,6 @@
             <div class="photo-grid">
                 @foreach($photos as $photo)
                     @php
-                        // Extract dimensions and color from the original URL
-                        // Original format: https://via.placeholder.com/150/92c952
-                        // New format: https://placehold.co/150x150/92c952/FFF
                         preg_match('/\/(\d+)\/([a-f0-9]{6})/i', $photo->thumbnail_url, $matches);
                         $size = $matches[1] ?? '150';
                         $color = $matches[2] ?? '92c952';
@@ -303,55 +337,21 @@
         @else
             <div class="empty-state">
                 <h2>No Photos Available</h2>
-                <p>Please run the fetch command to populate the database with photos.</p>
+                <p>Run the fetch command to populate the database.</p>
             </div>
         @endif
     </div>
 
     <script>
-        // Handle broken images
         document.addEventListener('DOMContentLoaded', function() {
-            const images = document.querySelectorAll('.photo-card img');
-            let loadedCount = 0;
-            let errorCount = 0;
-            
-            images.forEach(function(img) {
-                // Check if image loads successfully
-                img.addEventListener('load', function() {
-                    loadedCount++;
-                    console.log('Image loaded:', this.src);
-                });
-                
-                // Handle broken images
+            document.querySelectorAll('.photo-card img').forEach(function(img) {
                 img.addEventListener('error', function() {
-                    errorCount++;
-                    console.error('Image failed to load:', this.src);
-                    
-                    // Create a placeholder
                     const placeholder = document.createElement('div');
                     placeholder.className = 'image-placeholder';
                     placeholder.textContent = '🖼️';
-                    placeholder.title = 'Image not available: ' + this.src;
-                    
                     this.parentNode.replaceChild(placeholder, this);
                 });
             });
-            
-            // Debug info
-            setTimeout(function() {
-                console.log('Image loading stats:', {
-                    total: images.length,
-                    loaded: loadedCount,
-                    errors: errorCount
-                });
-                
-                if (errorCount > 0) {
-                    console.warn('Some images failed to load. This might be due to:');
-                    console.warn('1. CORS policy blocking external images');
-                    console.warn('2. JSONPlaceholder URLs being unavailable');
-                    console.warn('3. Network connectivity issues');
-                }
-            }, 3000);
         });
     </script>
 </body>
