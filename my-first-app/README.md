@@ -5,13 +5,13 @@ A Laravel-based gallery application that synchronizes data from JSONPlaceholder 
 ## Quick Start (Running the App)
 
 1. **Start the Server:**
+   You can use the provided batch file (on Windows):
    ```powershell
-   # Use the explicit PHP path for Herd
-   C:\Users\hrsoh\.config\herd\bin\php84\php.exe artisan serve
+   ./serve.bat
    ```
-   *Alternative:*
-   ```powershell
-   php -S 127.0.0.1:8000 -t public
+   Or run the manual command:
+   ```bash
+   php artisan serve
    ```
 
 2. **View the Gallery:**
